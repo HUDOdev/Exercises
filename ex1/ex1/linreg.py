@@ -26,8 +26,12 @@ def load_data(path, num_train):
     # TODO: load data according to the specifications,
     # e.g. using numpy.loadtxt
 
-    X_train, Y_train, X_test, Y_test = np.loadtxt(path,delimiter=",")
     
+    X_train = np.loadtxt(path, delimiter=";",skiprows=1,usecols=np.arange(0, 11),max_rows=num_train)
+    Y_train = np.loadtxt(path, delimiter=";",skiprows=1,usecols=(11),max_rows=num_train)
+    X_test = np.loadtxt(path, delimiter=";",skiprows=num_train,usecols=np.arange(0, 11))
+    Y_test = np.loadtxt(path, delimiter=";",skiprows=num_train,usecols=(11))
+
     return X_train, Y_train, X_test, Y_test
 
 
