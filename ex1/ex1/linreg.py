@@ -25,6 +25,8 @@ def load_data(path, num_train):
     """
     # TODO: load data according to the specifications,
     # e.g. using numpy.loadtxt
+
+    X_train, Y_train, X_test, Y_test = np.loadtxt(path,delimiter=",")
     
     return X_train, Y_train, X_test, Y_test
 
