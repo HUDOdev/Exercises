@@ -41,7 +41,7 @@ def fit(X, Y):
     X: numpy array of shape N x n containing data
     Y: numpy array of shape N containing targets
     Output:
-    theta: nump array of shape n + 1 containing weights
+    theta: numpy array of shape n + 1 containing weights
            obtained by fitting data X to targets Y
            using linear regression
     """
@@ -49,9 +49,7 @@ def fit(X, Y):
     #shape_X = np.shape(X)
     #shape_Y = np.shape(Y)
     #theta = np.zeros(int(shape_X[1])+1)
-    print(X)
-    print(Y)
-    theta = np.linalg.lstsq(X,Y,rcond=-1)
+    theta  = np.linalg.lstsq(X,Y,rcond=-1)
     return theta
 
 
