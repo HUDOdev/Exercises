@@ -57,7 +57,7 @@ def fit(X, Y):
 
     theta  = np.linalg.lstsq(X,Y,rcond=None)
     theta = theta[0]
-    
+
     return theta
 
 
@@ -71,6 +71,15 @@ def predict(X, theta):
     Y_pred: numpy array of shape N containig predictions
     """
     # TODO
+    theta = np.transpose(theta)
+
+    shape_X = np.shape(X)
+
+    X = np.transpose(X)
+    X = np.vstack([X, np.ones(shape_X[0])])
+    X = np.transpose(X)
+
+    Y_pred = X @ theta
     return Y_pred
 
 
@@ -83,4 +92,7 @@ def energy(Y_pred, Y_gt):
     se: squared error between Y_pred and Y_gt
     """
     # TODO
+
+    se = np.sum((Y_pred-Y_gt)**2)
+
     return se
