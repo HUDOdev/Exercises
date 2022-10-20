@@ -47,16 +47,14 @@ def fit(X, Y):
     """
     # TODO
 
-    
-    shape_X = np.shape(X)
-    shape_Y = np.shape(Y)
+    shape_X = np.shape(X)                       # get shape of X
 
-    X = np.transpose(X)
-    X = np.vstack([X, np.ones(shape_X[0])])
-    X = np.transpose(X)
+    X = np.transpose(X)                         # transpose X
+    X = np.vstack([X, np.ones(shape_X[0])])     # add 1 to the end of X
+    X = np.transpose(X)                         # transpose X again
 
-    theta  = np.linalg.lstsq(X,Y,rcond=None)
-    theta = theta[0]
+    theta  = np.linalg.lstsq(X,Y,rcond=None)    # use np function for linear regession
+    theta = theta[0]                            # use only the 0 element of the return tuple of linalg.lstsq
 
     return theta
 
@@ -71,15 +69,15 @@ def predict(X, theta):
     Y_pred: numpy array of shape N containig predictions
     """
     # TODO
-    theta = np.transpose(theta)
+    theta = np.transpose(theta)                 # transpose theta
 
-    shape_X = np.shape(X)
+    shape_X = np.shape(X)                       # get shape of X
 
-    X = np.transpose(X)
-    X = np.vstack([X, np.ones(shape_X[0])])
-    X = np.transpose(X)
+    X = np.transpose(X)                         # transpose X
+    X = np.vstack([X, np.ones(shape_X[0])])     # add 1 to the end of X
+    X = np.transpose(X)                         # transpose X again
 
-    Y_pred = X @ theta
+    Y_pred = X @ theta                          # Matrix multiplication to predict with data X an theta the value of Y_pred
     return Y_pred
 
 
@@ -93,6 +91,6 @@ def energy(Y_pred, Y_gt):
     """
     # TODO
 
-    se = np.sum((Y_pred-Y_gt)**2)
+    se = np.sum((Y_pred-Y_gt)**2)             # sum over the squared error of the hole data
 
     return se
