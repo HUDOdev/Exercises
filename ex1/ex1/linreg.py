@@ -46,10 +46,18 @@ def fit(X, Y):
            using linear regression
     """
     # TODO
-    #shape_X = np.shape(X)
-    #shape_Y = np.shape(Y)
-    #theta = np.zeros(int(shape_X[1])+1)
-    theta  = np.linalg.lstsq(X,Y,rcond=-1)
+
+    
+    shape_X = np.shape(X)
+    shape_Y = np.shape(Y)
+
+    X = np.transpose(X)
+    X = np.vstack([X, np.ones(shape_X[0])])
+    X = np.transpose(X)
+
+    theta  = np.linalg.lstsq(X,Y,rcond=None)
+    theta = theta[0]
+    
     return theta
 
 
