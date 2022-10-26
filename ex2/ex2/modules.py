@@ -65,6 +65,7 @@ class MSE(Loss):
     
     def forward(self, prediction, target):
         # implement MSE loss
+        return np.mean((prediction-target)**2)
         pass
 
 
