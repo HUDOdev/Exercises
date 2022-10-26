@@ -50,6 +50,8 @@ class ReLU(Module):
     
     def forward(self, x):
         # implement a ReLU
+        self.x = np.maximum(x,0)
+        return self.x
         pass
 
     
