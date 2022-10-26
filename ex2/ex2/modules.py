@@ -41,6 +41,8 @@ class Sigmoid(Module):
     
     def forward(self, x):
         # implement the sigmoid
+        self.x = np.exp(x)/(1+np.exp(x))
+        return self.x
         pass
 
     
