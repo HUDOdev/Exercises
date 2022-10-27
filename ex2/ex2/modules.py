@@ -11,15 +11,19 @@ class Network(Module):
     
     def __init__(self, layers=None):
         # store the list of layers passed in the constructor in your Network object
+        self.layers = layers
         pass
     
     def forward(self, x):
         # for executing the forward pass, run the forward passes of each
         # layer and pass the output as input to the next layer
-        pass
+        for layer in self.layers:
+            x = layer.forward(x)
+        return x
     
     def add_layer(self, layer):
         # append layer at the end of the list of already existing layer
+        self.layers.append(layer)
         pass
 
     
@@ -34,7 +38,7 @@ class LinearLayer(Module):
     def forward(self, x):
         # compute the affine linear transformation x -> Wx + b
         return self.W @ x + self.b
-        pass
+        
 
     
 class Sigmoid(Module):
@@ -43,7 +47,7 @@ class Sigmoid(Module):
         # implement the sigmoid
         self.x = np.exp(x)/(1+np.exp(x))
         return self.x
-        pass
+        
 
     
 class ReLU(Module):
@@ -52,7 +56,7 @@ class ReLU(Module):
         # implement a ReLU
         self.x = np.maximum(x,0)
         return self.x
-        pass
+        
 
     
 class Loss(Module):
@@ -66,7 +70,7 @@ class MSE(Loss):
     def forward(self, prediction, target):
         # implement MSE loss
         return np.mean((prediction-target)**2)
-        pass
+        
 
 
 class CrossEntropyLoss(Loss):
@@ -75,4 +79,4 @@ class CrossEntropyLoss(Loss):
         # implement cross entropy loss
 
         return -1 * np.log(np.exp(prediction)/sum(np.exp(prediction)))
-        pass
+        
