@@ -77,6 +77,6 @@ class CrossEntropyLoss(Loss):
     
     def forward(self, prediction, target):
         # implement cross entropy loss
-
-        return -1 * np.log(np.exp(prediction)/sum(np.exp(prediction)))
+        sm = np.exp(prediction) / np.exp(prediction).sum()
+        return -np.log(sm[target])
         
