@@ -45,8 +45,8 @@ class Sigmoid(Module):
     
     def forward(self, x):
         # implement the sigmoid
-        self.x = np.exp(x)/(1+np.exp(x))
-        return self.x
+        
+        return np.exp(x)/(1+np.exp(x))
         
 
     
@@ -54,8 +54,7 @@ class ReLU(Module):
     
     def forward(self, x):
         # implement a ReLU
-        self.x = np.maximum(x,0)
-        return self.x
+        return np.maximum(x,0)
         
 
     
