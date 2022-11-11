@@ -96,6 +96,10 @@ class Mul(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of Mul
+        grad = 1 * dLdf * self.t2.data
+        self.t1.backward(grad)
+        grad = 1 * dLdf * self.t1.data
+        self.t2.backward(grad)
         pass
 
 
