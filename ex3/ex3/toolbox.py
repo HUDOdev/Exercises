@@ -135,6 +135,7 @@ class Pow(Function):
     def backward(self, dLdf):
         # implement the backward pass of Pow
         # only consider self.t but not the exponent
+        self.t.backward(dLdf * self.exponent * self.t.data ** (self.exponent - 1))
         pass
             
 
@@ -166,6 +167,10 @@ class ReLU(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of ReLU
+        t = self.t.data
+        t[t<0] = 0
+        t[t>0] = 1
+        self.t.backward(dLdf * t)
         pass
 
 def relu(t):
@@ -185,6 +190,7 @@ class Exp(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of Exp
+        self.t.backward(dLdf * self.expt)
         pass
 
 def exp(t):
@@ -203,6 +209,7 @@ class Log(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of Log
+        self.t.backward(dLdf / self.t.data)
         pass
 
 def log(t):
@@ -222,6 +229,7 @@ class Sum(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of Sum
+        self.t.backward()
         pass
 
 
