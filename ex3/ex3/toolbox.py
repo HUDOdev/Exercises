@@ -229,7 +229,8 @@ class Sum(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of Sum
-        self.t.backward()
+        dLdT = np.expand_dims(dLdf, axis = self.dim)
+        self.t.backward(np.repeat(dLdT, self.t.data.shape[self.dim], axis = self.dim))
         pass
 
 
