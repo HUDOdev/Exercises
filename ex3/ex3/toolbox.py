@@ -116,6 +116,8 @@ class Div(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of Div
+        self.t1.backward(dLdf / self.t2.data)
+        self.t2.backward(-1 * dLdf * self.t1.data / self.t2.data **2 )
         pass
 
             
