@@ -246,7 +246,7 @@ class Mean(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of Mean
-        self.t.backward(np.ones_like(self.t.data) / self.t.data.size)
+        self.t.backward(dLdf * np.ones_like(self.t.data) / self.t.data.size)
 
         # Erklärung: Da der Gradient eine Art gewichtung darstellt, und bei einem Mittelwert die
         # Gewichtung jedes Elemts die gleich ist, ist der grad nicht vom Wert sonder nur
@@ -267,5 +267,8 @@ class GetItem(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of GetItem
+        grad = np.zeros_like(self.t.data)
+        grad[self.index] = 1
+        self.t.backward(grad * dLdf)
         pass
 
