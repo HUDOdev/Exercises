@@ -152,9 +152,9 @@ class MatMul(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of MatMul
-        grad = dLdf @ self.v.data.transpose()
+        grad = dLdf @ self.v.data.transpose()   # Gradient für Matrix
         self.M.backward(grad)
-        grad = self.M.data.transpose() @ dLdf
+        grad = self.M.data.transpose() @ dLdf   # Gardient für Vektor
         self.v.backward(grad)
         pass
 
@@ -252,7 +252,7 @@ class Mean(Function):
         # implement the backward pass of Mean
         self.t.backward(dLdf * np.ones_like(self.t.data) / self.t.data.size)
 
-        # Erklärung: Da der Gradient eine Art gewichtung darstellt, und bei einem Mittelwert die
+        # Erklärung: Da der Gradient eine Art Gewichtung darstellt, und bei einem Mittelwert die
         # Gewichtung jedes Elemts die gleich ist, ist der grad nicht vom Wert sonder nur
         # von der Anzahl der Elemente der Matrix abhänig. Bei vier Elementen sind das 25% pro Element 
         pass
