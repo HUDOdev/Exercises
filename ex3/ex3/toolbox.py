@@ -152,6 +152,10 @@ class MatMul(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of MatMul
+        grad = dLdf @ self.v.data.transpose()
+        self.M.backward(grad)
+        grad = self.M.data.transpose() @ dLdf
+        self.v.backward(grad)
         pass
 
 
