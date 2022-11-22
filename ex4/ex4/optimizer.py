@@ -8,9 +8,13 @@ class SGD:
     def step(self):
         # TODO: update the parameters' gradients according to
         #       gradient descent with step size lr;
+        for param in self.params:
+            param.data = param.data - self.lr * param.grad
         pass
     
     def zero_grad(self):
         # TODO: set all the parameters' gradients to zero
         #       by calling 'zero_' on the parameters' gradients
+        for param in self.params:
+            param.grad.zero_()
         pass
