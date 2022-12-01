@@ -4,6 +4,14 @@ import torch.nn as nn
 def init_weights(m):
     if isinstance(m, nn.Linear):
         # set the layer's weights as discussed in the lecture
+        # gesucht ist die Initialisation nach Folie 6
+        # wir müssen 2/ni nehmen weil wir ReLUs als activation layers haben
+        # damit berechnet man die Varianz. Da die funktion .normal_ die standardabweichung braucht noch die wurzel
+        # weight.normal packt in den weight tensor wieder einen Normalverteilten Datensatz mit der Größe die weight schon vorher hatte (ähnlich zu ones oder zeros)
+        with torch.no_grad():
+            var = torch.as_tensor(2/m.weight.shape[1])
+            std = torch.sqrt(var)
+            m.weight.normal_(0, std)
         pass
         
 
