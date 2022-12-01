@@ -22,30 +22,46 @@ class BatchNorm(nn.Module):
         # set theta_mu and theta_sigma such that the output of
         # forward initially is zero centered and 
         # normalized to variance 1
-        self.theta_mu = nn.Parameter(theta_mu)
-        self.theta_sigma = nn.Parameter(theta_sigma)
+        # initialisierung zu 0 bzw 1, da die Faktoren keinen Einfluss haben sollen und dies so in der Formel in Zeile 65 keinen Einfluss haben
+        self.theta_mu = nn.Parameter(torch.zeros(num_channels))
+        self.theta_sigma = nn.Parameter(torch.ones(num_channels))
         self.running_mean = None
         self.running_var = None
         self.eps = 1e-6
         
     def forward(self, x):
+        # hier hat man zwei Modi in einer Forward Funktion. entweder man trainiert das netzwerk, dann updated man die ganze zeit die running werte
+        # für den fall des testens nutzt man diese Werte nur noch und überschreibt die nicht mehr
+        # deshalb ist unten drunter die formel mit mean und var und nicht mit self.runn..
         if self.training:
             # specify behavior at training time
+            mean = x.mean(dim=0)
+            var = x.var(dim=0)
             if self.running_mean is None:
                 # set the running stats to stats of x
+                self.running_mean = mean
+                self.running_var = var
                 pass
             else:
                 # update the running stats by setting them
                 # to the weighted sum of 0.9 times the
                 # current running stats and 0.1 times the
                 # stats of x
+                self.running_mean = 0.9 * self.running_mean + 0.1 * mean
+                self.running_var = 0.9 * self.running_var + 0.1 * var
                 pass
         else:
             if self.running_mean is None:
                 # normalized wrt to stats of
                 # current batch x
-                pass
+                # der fall fängt ab, falls man nichts trainiert hat und direkt ins testen geht
+                # deshalb könnte man entweder default werte setzen oder man schmeisst einfach einen Error.. siehe Video
+                raise ValueError('Model must be trained first.')
             else:
                 # use running stats for normalization
+                mean = self.running_mean
+                var = self.running_var
                 pass
+        x = self.theta_sigma* (x-mean)/torch.sqrt(var+self.eps) + self.theta_mu # Formel nach Folie 10
+        return x
     
