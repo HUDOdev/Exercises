@@ -7,6 +7,7 @@ class Dropout(nn.Module):
     def __init__(self, p=0.1):
         super().__init__()
         # store p
+        self.p = p
         
     def forward(self, x):
         # In training mode, set each value 
