@@ -16,5 +16,12 @@ class Dropout(nn.Module):
         # according to the lecture
         # In evaluation mode, return the
         # unmodified input
-        pass
-    
+
+        if self.training:
+            mask = torch.ones_like(x)
+            noise = torch.rand_like(x)
+            mask[noise <=self.p] = 0
+            mask = mask / (1-self.p)
+            return x * mask
+        else:
+            return x
