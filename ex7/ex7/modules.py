@@ -21,6 +21,9 @@ class Conv2d(nn.Module):
         # implement the convolution of x with self.kernel
         # using self.stride as stride
         # The output is expected to be of size C x H' x W'
+
+        
+
         pass
 
 
@@ -35,4 +38,15 @@ class ZeroPad2d(nn.Module):
         # return tensor zero padded equally at left, right,
         # top, bottom such that the output is of size
         # C x (H + 2 * self.padding) x (W + 2 * self.padding)
-        pass
+
+        
+        C, H, W = x.shape
+
+        H_pad = H + 2 * self.padding
+        W_pad = W + 2 * self.padding
+
+        x_pad = torch.zeros(C,H_pad,W_pad)
+        x_pad[:,self.padding:H+self.padding, self.padding:W+self.padding] = x
+
+        return x_pad
+        
